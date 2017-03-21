@@ -3,32 +3,9 @@ version: '2'
 services:
   web:
     build: docker
-    ports:
-      - '80:80'
     depends_on:
-      - redis
-      - es
-      - db
       - hub
       - firefox
-    volumes:
-      - .:/var/www/html
-
-  redis:
-    image: redis:alpine
-
-  es:
-    image: elasticsearch:5-alpine
-    ports:
-      - '9200:9200'
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-
-  db:
-    image: mvertes/alpine-mongo
-    command: mongod --smallfiles
-    volumes:
-      - dbdata:/data/db
 
   hub:
     image: atanistra/selenium-hub
@@ -44,9 +21,3 @@ services:
       - hub
     tmpfs:
       - /tmp
-
-volumes:
-  esdata:
-    driver: local
-  dbdata:
-    driver: local
